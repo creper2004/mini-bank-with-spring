@@ -33,9 +33,9 @@ public class CloseAccountProcessor implements OperationCommandProcessor {
         int accountId = Integer.parseInt(scanner.nextLine());
         Account account = accountService.closeAccount(accountId);
 
-        User user = userService.findUserById(account.getUserId())
+        User user = userService.findUserById(account.getOwner().getId())
                 .orElseThrow(() -> new IllegalArgumentException("No such user with id=%s"
-                        .formatted(account.getUserId())));
+                        .formatted(account.getOwner().getId())));
         user.getAccountList().remove(account);
 
         System.out.println("Account successfully closed with id=%s"

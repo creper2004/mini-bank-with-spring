@@ -8,6 +8,5 @@ public class App {
     {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext("org.example");
-
     }
 }

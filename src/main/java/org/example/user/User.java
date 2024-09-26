@@ -1,19 +1,31 @@
 package org.example.user;
 
+import jakarta.persistence.*;
 import org.example.account.Account;
 
 import java.util.List;
 
+@Entity
+@Table(name="user_table")
 public class User {
-    private final int id;
-    private final String login;
-    private final List<Account> accountList;
 
-    public User(int id, String login, List<Account> accountList) {
-        this.id = id;
+    @Id
+    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(name = "login", unique = true)
+    private String login;
+
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
+    private List<Account> accountList;
+
+    public User(String login, List<Account> accountList) {
         this.login = login;
         this.accountList = accountList;
     }
+
+    public User() {}
 
     public int getId() {
         return id;
@@ -25,6 +37,19 @@ public class User {
 
     public List<Account> getAccountList() {
         return accountList;
+    }
+
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setAccountList(List<Account> accountList) {
+        this.accountList = accountList;
     }
 
     @Override

@@ -19,9 +19,11 @@ public class ShowAllUsersProcessor implements OperationCommandProcessor {
 
     @Override
     public void processOperation() {
+        System.out.println("Дошел до выполнения процесса операции");
         List<User> users = userService.getAllUsers();
         System.out.println("List of all users:");
         users.forEach(System.out::println);
+        System.out.println("Все");
     }
 
     @Override

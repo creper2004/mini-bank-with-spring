@@ -1,22 +1,35 @@
 package org.example.account;
 
+
+import jakarta.persistence.*;
+import org.example.user.User;
+
+@Entity
+@Table(name="account")
 public class Account {
-    private final int id;
-    private final int userId;
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+
+    @Column(name = "money_amount")
     private int moneyAmount;
 
-    public Account(int id, int userId, int moneyAmount) {
-        this.id = id;
-        this.userId = userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User owner;
+
+    public Account() {}
+
+    public Account(int moneyAmount, User owner) {
         this.moneyAmount = moneyAmount;
+        this.owner = owner;
     }
 
     public int getId() {
         return id;
-    }
-
-    public int getUserId() {
-        return userId;
     }
 
     public int getMoneyAmount() {
@@ -27,11 +40,22 @@ public class Account {
         this.moneyAmount = moneyAmount;
     }
 
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
     @Override
     public String toString() {
         return "Account{" +
                 "id=" + id +
-                ", userId=" + userId +
                 ", moneyAmount=" + moneyAmount +
                 '}';
     }
